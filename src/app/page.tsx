@@ -1,3 +1,9 @@
+import { BallotChainApp } from '@/components/ballotchain-app';
+
 export default function Home() {
-  return <></>;
+  return (
+    <main>
+      <BallotChainApp />
+    </main>
+  );
 }
