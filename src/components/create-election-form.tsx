@@ -3,6 +3,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +20,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import { useStacks } from '@/hooks/use-stacks';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
+import { elections } from '@/lib/elections';
 
 const formSchema = z
   .object({
@@ -38,7 +40,8 @@ const formSchema = z
 
 export function CreateElectionForm() {
   const { toast } = useToast();
-  const { isConnected } = useStacks();
+  const { isConnected, user } = useStacks();
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -52,7 +55,7 @@ export function CreateElectionForm() {
   });
 
   function onSubmit(values: z.infer<typeof formSchema>) {
-    if (!isConnected) {
+    if (!isConnected || !user) {
       toast({
         variant: 'destructive',
         title: 'Wallet not connected',
@@ -63,10 +66,29 @@ export function CreateElectionForm() {
 
     console.log(values);
     // TODO: Call smart contract to create election
+    
+    // Mock creating a new election and redirecting
+    const newElectionId = elections.length + 1;
+    const newElection = {
+      id: newElectionId,
+      ...values,
+      creator: user.stxAddress.mainnet,
+      candidates: Array.from({ length: values.candidateCount }, (_, i) => ({
+        id: i + 1,
+        votes: 0,
+      })),
+    };
+    
+    // In a real app, we'd add this to our state after successful transaction
+    // elections.push(newElection);
+
     toast({
       title: 'Transaction Submitted',
       description: 'Your new election is being created.',
     });
+    
+    // Redirect to the new admin page
+    router.push(`/elections/${newElectionId}/admin`);
   }
 
   return (
