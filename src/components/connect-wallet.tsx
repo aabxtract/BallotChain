@@ -1,6 +1,5 @@
 'use client';
 
-import { useConnect } from '@stacks/connect-react';
 import { Button } from './ui/button';
 import { useStacks } from '@/hooks/use-stacks';
 import {
@@ -32,7 +31,7 @@ export function ConnectWallet() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
-            {user.profile?.stxAddress.testnet}
+            {user.profile?.stxAddress.mainnet}
           </DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={doSignOut}>

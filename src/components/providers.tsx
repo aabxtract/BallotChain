@@ -1,14 +1,15 @@
 'use client';
 
-import { StacksProvider } from '@stacks/connect-react';
+import { Connect } from '@stacks/connect-react';
+import { useStacks } from '@/hooks/use-stacks';
 
 export function Providers({ children }: { children: React.ReactNode }) {
+  const { authOptions } = useStacks();
   return (
-    <StacksProvider
-      appName="BallotChain"
-      appIcon="/icon.png"
+    <Connect
+      authOptions={authOptions}
     >
       {children}
-    </StacksProvider>
+    </Connect>
   );
 }
