@@ -1,9 +1,5 @@
-import { BallotChainApp } from '@/components/ballotchain-app';
+import { LandingPage } from '@/components/landing-page';
 
 export default function Home() {
-  return (
-    <main>
-      <BallotChainApp />
-    </main>
-  );
+  return <LandingPage />;
 }
