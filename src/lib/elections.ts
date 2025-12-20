@@ -12,6 +12,7 @@ export type Election = {
   startBlock: number;
   endBlock: number;
   candidates: Candidate[];
+  tokenContractAddress?: string; // Optional contract address for token-gating
 };
 
 const shortAddr = (addr: string) => `${addr.slice(0, 6)}...${addr.slice(-4)}`;
@@ -44,6 +45,7 @@ export const elections: Election[] = [
       { id: 3, name: 'Charlie', votes: 750 },
       { id: 4, name: 'Diana', votes: 910 },
     ],
+    tokenContractAddress: 'SP2KAF9D8BYBFH3JRF2A722425P93A5S5323J4D' // Example token-gated election
   },
   {
     id: 3,

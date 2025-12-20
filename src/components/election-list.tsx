@@ -10,6 +10,7 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { elections, type Election } from '@/lib/elections';
 import Link from 'next/link';
+import { Lock } from 'lucide-react';
 
 function getStatus(election: Election, currentBlock: number): 'Upcoming' | 'Active' | 'Ended' {
   if (currentBlock < election.startBlock) return 'Upcoming';
@@ -33,7 +34,10 @@ function ElectionCard({ election }: { election: Election }) {
         <Card className="hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col">
         <CardHeader>
             <div className="flex justify-between items-start">
-            <CardTitle>{election.title}</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              {election.title}
+              {election.tokenContractAddress && <Lock className="w-4 h-4 text-muted-foreground" title="Token-gated" />}
+            </CardTitle>
             <Badge className={`${statusColors[status]}`}>
                 {status}
             </Badge>

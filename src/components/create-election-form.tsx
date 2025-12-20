@@ -32,6 +32,7 @@ const formSchema = z
       .gt(1, 'There must be at least 2 candidates'),
     startBlock: z.coerce.number().int().min(1, 'Start block must be a positive number'),
     endBlock: z.coerce.number().int().min(1, 'End block must be a positive number'),
+    tokenContractAddress: z.string().optional(),
   })
   .refine((data) => data.endBlock > data.startBlock, {
     message: 'End block must be greater than start block',
@@ -51,6 +52,7 @@ export function CreateElectionForm() {
       candidateCount: 2,
       startBlock: 0,
       endBlock: 0,
+      tokenContractAddress: '',
     },
   });
 
@@ -171,6 +173,22 @@ export function CreateElectionForm() {
                   </FormControl>
                   <FormDescription>
                     The blockchain block number when voting ends.
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="tokenContractAddress"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Token Gating (Optional)</FormLabel>
+                  <FormControl>
+                    <Input placeholder="e.g., SP2...T5V.my-cool-nft" {...field} />
+                  </FormControl>
+                  <FormDescription>
+                    Enter a token contract address to restrict voting to token holders.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
