@@ -18,11 +18,87 @@ import type { Election } from '@/lib/elections';
 import { useStacks } from '@/hooks/use-stacks';
 import { useToast } from '@/hooks/use-toast';
 import { Lock } from 'lucide-react';
+import { Textarea } from './ui/textarea';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 function getStatus(election: Election, currentBlock: number): 'Upcoming' | 'Active' | 'Ended' {
   if (currentBlock < election.startBlock) return 'Upcoming';
   if (currentBlock >= election.startBlock && currentBlock <= election.endBlock) return 'Active';
   return 'Ended';
+}
+
+type Comment = {
+  author: string;
+  text: string;
+  timestamp: Date;
+};
+
+function CommentsSection({ electionId }: { electionId: number }) {
+  const { isConnected, user } = useStacks();
+  const [comments, setComments] = useState<Comment[]>([]);
+  const [newComment, setNewComment] = useState('');
+  
+  // In a real app, you'd fetch comments for the electionId
+  useEffect(() => {
+    // Mock comments
+    setComments([
+      { author: 'SP2J...T5V', text: 'This is a great proposal, I am voting Yes!', timestamp: new Date(Date.now() - 1000 * 60 * 5) },
+      { author: 'SP3G...W7X', text: 'I have some concerns about the budget allocation.', timestamp: new Date(Date.now() - 1000 * 60 * 2) },
+    ]);
+  }, [electionId]);
+
+  const handlePostComment = () => {
+    if (!newComment.trim() || !user) return;
+    const comment: Comment = {
+      author: `${user.stxAddress.mainnet.slice(0,6)}...${user.stxAddress.mainnet.slice(-4)}`,
+      text: newComment,
+      timestamp: new Date(),
+    };
+    setComments([comment, ...comments]);
+    setNewComment('');
+  };
+
+  return (
+    <Card className="mt-8">
+      <CardHeader>
+        <CardTitle>Discussion</CardTitle>
+      </CardHeader>
+      <CardContent>
+        {isConnected ? (
+          <div className="space-y-4">
+            <Textarea
+              placeholder="Share your thoughts on this election..."
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+            />
+            <Button onClick={handlePostComment} disabled={!newComment.trim()}>
+              Post Comment
+            </Button>
+          </div>
+        ) : (
+          <p className="text-muted-foreground">Connect your wallet to join the discussion.</p>
+        )}
+        <div className="space-y-6 mt-6">
+          {comments.map((comment, index) => (
+            <div key={index} className="flex items-start gap-4">
+              <Avatar>
+                <AvatarFallback>{comment.author.substring(0, 2)}</AvatarFallback>
+              </Avatar>
+              <div className="w-full">
+                <div className="flex items-center justify-between">
+                  <p className="font-semibold">{comment.author}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {comment.timestamp.toLocaleTimeString()}
+                  </p>
+                </div>
+                <p className="text-sm text-muted-foreground mt-1 bg-muted/50 p-3 rounded-md">{comment.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  )
 }
 
 export function ElectionDetail({ election }: { election: Election }) {
@@ -176,6 +252,9 @@ export function ElectionDetail({ election }: { election: Election }) {
           </CardFooter>
         )}
       </Card>
+
+      <CommentsSection electionId={election.id} />
+
       <div className="mt-4 text-center text-muted-foreground">
         <p>
           Voting Period: Block {election.startBlock} to Block {election.endBlock}
