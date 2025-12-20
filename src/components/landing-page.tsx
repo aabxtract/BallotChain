@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export function LandingPage() {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center p-4">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] text-center p-4">
       <div className="flex flex-col items-center space-y-4">
         <div className="p-4 rounded-full bg-primary/10">
           <div className="p-3 rounded-full bg-primary/20">
