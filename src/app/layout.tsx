@@ -27,10 +27,8 @@ export default function RootLayout({
         )}
       >
         <Providers>
-          <div className="flex flex-col h-full">
-            <Header />
-            <main className="flex-1">{children}</main>
-          </div>
+          <Header />
+          <main>{children}</main>
           <Toaster />
         </Providers>
       </body>
