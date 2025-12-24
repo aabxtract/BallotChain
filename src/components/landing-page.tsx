@@ -25,9 +25,6 @@ export function LandingPage() {
                 <Button size="lg" asChild>
                   <Link href="/elections">Launch App</Link>
                 </Button>
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/create-election">Create Election</Link>
-                </Button>
               </div>
             </div>
           </div>
