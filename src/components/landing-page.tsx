@@ -12,10 +12,10 @@ export function LandingPage() {
           </div>
         </div>
         <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl">
-          BallotChain
+          Ballotz
         </h1>
         <p className="max-w-[600px] text-muted-foreground md:text-xl">
-          Create and run transparent elections on Bitcoin via Stacks.
+          The universal voting platform for organizations big and small. From major public elections to minor team decisions, Ballotz provides a secure and transparent solution.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 mt-6">
           <Button size="lg" variant="outline" asChild>

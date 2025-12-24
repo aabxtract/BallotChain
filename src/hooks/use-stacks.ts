@@ -24,7 +24,7 @@ export function useStacks() {
 
   const authOptions = {
     appDetails: {
-      name: 'BallotChain',
+      name: 'Ballotz',
       icon: '/icon.png',
     },
     redirectTo: '/',

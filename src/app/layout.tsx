@@ -9,8 +9,8 @@ import { Header } from '@/components/header';
 const inter = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
 export const metadata: Metadata = {
-  title: 'BallotChain',
-  description: 'Create and run transparent elections on Bitcoin via Stacks.',
+  title: 'Ballotz',
+  description: 'A universal voting platform for organizations of all sizes.',
 };
 
 export default function RootLayout({
