@@ -22,10 +22,10 @@ export function LandingPage() {
                 A universal voting platform for organizations big and small, built on the Stacks L2 to leverage the security of Bitcoin. Run transparent and secure elections for everything from major public issues to minor team decisions.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 mt-6">
-                <Button size="lg" variant="outline" asChild>
-                  <Link href="/elections">View Elections</Link>
-                </Button>
                 <Button size="lg" asChild>
+                  <Link href="/elections">Launch App</Link>
+                </Button>
+                <Button size="lg" variant="outline" asChild>
                   <Link href="/create-election">Create Election</Link>
                 </Button>
               </div>
